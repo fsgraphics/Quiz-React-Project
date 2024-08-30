@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   get,
   getDatabase,
-  limitToFirst,
   orderByKey,
   query,
   ref,
@@ -23,7 +22,6 @@ const useVideoList = (page) => {
         videosRef,
         orderByKey(),
         startAt("" + page),
-        limitToFirst(8)
       );
 
       try {
@@ -46,7 +44,10 @@ const useVideoList = (page) => {
       }
     }
 
+    
+
     fetchVideos();
+
   }, [page]);
   return {
     loading,
