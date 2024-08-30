@@ -1,19 +1,19 @@
 import React from "react";
 import classes from "./Styles/Video.module.css";
-import imges from "../assets/images/City.jpg";
 
-const Video = () => {
+const Video = ({ title, id, noq }) => {
   return (
-    <a href="./quiz.html">
-      <div className={classes.video}>
-        <img src={imges} alt="City" />
-        <p>React Hooks Bangla React useReducer.</p>
-        <div className={classes.qmeta}>
-          <p>Question</p>
-          <p>Tolal points:</p>
-        </div>
+    <div className={classes.video}>
+      <img
+        src={`http://img.youtube.com/vi/${id}/maxresdefault.jpg`}
+        alt={title}
+      />
+      <p>{title}</p>
+      <div className={classes.qmeta}>
+        <p> {noq} Question</p>
+        <p>Tolal points: {noq * 5} </p>
       </div>
-    </a>
+    </div>
   );
 };
 
