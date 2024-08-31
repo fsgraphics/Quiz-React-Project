@@ -8,7 +8,7 @@ const Videos = () => {
   const [page, setPage] = useState(1);
   const { loading, error, videos, hasMore } = useVideoList(page);
   return (
-    <div >
+    <div>
       {videos.length > 0 && (
         <InfiniteScroll
           dataLength={videos.length}
@@ -25,8 +25,12 @@ const Videos = () => {
                 />
               </Link>
             ) : (
-              // eslint-disable-next-line react/jsx-key
-              <Video title={video.title} id={video.youtubeID} noq={video.noq} />
+              <Video
+                title={video.title}
+                id={video.youtubeID}
+                noq={video.noq}
+                key={video.youtubeID}
+              />
             )
           )}
         </InfiniteScroll>

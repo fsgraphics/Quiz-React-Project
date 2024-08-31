@@ -2,9 +2,11 @@ import React, { useEffect, useReducer, useState } from "react";
 import Answers from "../Answers";
 import ProgressBar from "../ProgressBar";
 import MiniPlayer from "../MiniPlayer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useQuestions from "../../hooks/useQuestions";
 import _ from "lodash";
+import { useAuth } from "./../../contexts/AuthContext";
+import { getDatabase, set, ref } from "firebase/database";
 
 const initialState = null;
 
@@ -33,10 +35,12 @@ const reducer = (state, action) => {
 const Quiz = () => {
   const { id } = useParams();
   const { loading, error, questions } = useQuestions(id);
-  // eslint-disable-next-line no-unused-vars
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const [qna, dispatch] = useReducer(reducer, initialState);
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  console.log(currentUser.uid);
 
   useEffect(() => {
     dispatch({
@@ -53,7 +57,38 @@ const Quiz = () => {
       value: e.target.checked,
     });
   }
+  // handle when user clicks the next button to get the next question
 
+  function nextQuestion() {
+    console.log("Fazle Next========>>>>>>>>");
+    if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion((prevCurrent) => prevCurrent + 1);
+    }
+  }
+  // handle when user clicks the next button to get the Previous question
+
+  function prevQuestion() {
+    if (currentQuestion >= 1 && currentQuestion <= questions.length) {
+      setCurrentQuestion((prevCurrent) => prevCurrent - 1);
+    }
+  }
+  // Submit Quiz
+  async function submit() {
+    const { uid } = currentUser;
+    const db = getDatabase();
+    const resultRef = ref(db, `result/${uid}`);
+    await set(resultRef, {
+      [id]: qna,
+    });
+
+    navigate({
+      pathname: `/result/${id}`,
+      state: { qna },
+    });
+  }
+  // calculated percentage of progress
+  const percentage =
+    questions.length > 0 ? ((currentQuestion + 1) / questions.length) * 100 : 0;
   return (
     <>
       {loading && <div>Loading............</div>}
@@ -66,7 +101,12 @@ const Quiz = () => {
             options={qna[currentQuestion].options}
             hendleChange={hendleAnawerChange}
           />
-          <ProgressBar />
+          <ProgressBar
+            next={nextQuestion}
+            prev={prevQuestion}
+            progress={percentage}
+            submit={submit}
+          />
           <MiniPlayer />
         </>
       )}
