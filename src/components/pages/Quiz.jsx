@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import Answers from "../Answers";
 import ProgressBar from "../ProgressBar";
 import MiniPlayer from "../MiniPlayer";
-import { useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useQuestions from "../../hooks/useQuestions";
 import _ from "lodash";
 import { useAuth } from "./../../contexts/AuthContext";
@@ -35,12 +35,12 @@ const reducer = (state, action) => {
 const Quiz = () => {
   const { id } = useParams();
   const { loading, error, questions } = useQuestions(id);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
 
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  // console.log(questions);
   const [qna, dispatch] = useReducer(reducer, initialState);
   const { currentUser } = useAuth();
-  const state = useLocation(); 
-  console.log(state);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch({
@@ -81,12 +81,7 @@ const Quiz = () => {
       [id]: qna,
     });
 
-    // state.push({
-    //   pathname: `/result/${id}`,
-    //   state: { qna },
-      
-    // });
-// console.log(state)
+    navigate({ pathname: `/result/${id}` }, { state: { qna } });
   }
   // calculated percentage of progress
   const percentage =
@@ -94,7 +89,7 @@ const Quiz = () => {
   return (
     <>
       {loading && <div>Loading............</div>}
-      {error && <div>There was an Error</div>}
+      {error && <div>There was an Error from Quiz page!</div>}
       {!loading && !error && qna && qna.length > 0 && (
         <>
           <h1>{qna[currentQuestion].title}</h1>
