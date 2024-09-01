@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import Answers from "../Answers";
 import ProgressBar from "../ProgressBar";
 import MiniPlayer from "../MiniPlayer";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useQuestions from "../../hooks/useQuestions";
 import _ from "lodash";
 import { useAuth } from "./../../contexts/AuthContext";
@@ -39,8 +39,8 @@ const Quiz = () => {
 
   const [qna, dispatch] = useReducer(reducer, initialState);
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
-  console.log(currentUser.uid);
+  const state = useLocation(); 
+  console.log(state);
 
   useEffect(() => {
     dispatch({
@@ -81,10 +81,12 @@ const Quiz = () => {
       [id]: qna,
     });
 
-    navigate({
-      pathname: `/result/${id}`,
-      state: { qna },
-    });
+    // state.push({
+    //   pathname: `/result/${id}`,
+    //   state: { qna },
+      
+    // });
+// console.log(state)
   }
   // calculated percentage of progress
   const percentage =
