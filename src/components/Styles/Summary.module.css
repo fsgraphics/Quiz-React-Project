@@ -23,8 +23,9 @@
 .score {
   width: 400px;
   text-align: center;
-  font-size: 20px;
+  font-size: 60px;
   font-weight: 600;
+  color: rgb(4, 81, 4);
 }
 .badge {
   text-align: center;
@@ -46,3 +47,4 @@
     width: 100%;
   }
 }
+

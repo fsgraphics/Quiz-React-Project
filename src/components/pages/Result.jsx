@@ -3,7 +3,7 @@ import Summary from "../Summary";
 import Analysis from "../Analysis";
 import { useLocation, useParams } from "react-router-dom";
 import useAnswers from "../../hooks/useAnswers";
-import Question from "./../Question";
+import _ from "lodash";
 
 const Result = () => {
   const { id } = useParams();
@@ -26,17 +26,22 @@ const Result = () => {
           option.checked = true;
         }
       });
+      if(_.isEqual(correctIndexes, checkedIndexes)){
+        score = score + 5;
+      }
     });
+    return score;
   }
-
+  const userScore = calculate();
+  
   return (
     <>
       {loading && <div>Loading............</div>}
       {error && <div>There was an Error from Result page!</div>}
       {answers && answers.length > 0 && (
         <>
-          <Summary />
-          <Analysis />
+          <Summary score= {userScore} noq= {answers.length} />
+          <Analysis answers={answers} />
         </>
       )}
     </>
