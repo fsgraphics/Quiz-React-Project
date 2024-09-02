@@ -10,7 +10,7 @@
   border-radius: 5px;
 }
 
-.miniPlayer img {
+.miniPlayer .player {
   width: 300px;
   aspect-ratio: 16 / 9;
   object-fit: cover;
@@ -50,6 +50,12 @@
     transform: scale(1);
   }
 }
+.miniPlayer p {
+  font-weight: 500;
+  font-size: 14px;
+  margin: 10px 0;
+  color: var(--fontPrimary);
+}
 
 @media only screen and (max-width: 1536px) {
   .miniPlayer {
@@ -85,7 +91,7 @@
   display: none;
 }
 
-.floatingBtn img {
+.floatingBtn .player {
   transform: scale(0);
   display: none;
 }

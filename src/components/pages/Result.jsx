@@ -9,9 +9,8 @@ const Result = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const { qna } = state;
+  console.log(state);
   const { loading, error, answers } = useAnswers(id);
-
-  console.log(answers);
 
   function calculate() {
     let score = 0;
@@ -26,21 +25,21 @@ const Result = () => {
           option.checked = true;
         }
       });
-      if(_.isEqual(correctIndexes, checkedIndexes)){
+      if (_.isEqual(correctIndexes, checkedIndexes)) {
         score = score + 5;
       }
     });
     return score;
   }
   const userScore = calculate();
-  
+
   return (
     <>
       {loading && <div>Loading............</div>}
       {error && <div>There was an Error from Result page!</div>}
       {answers && answers.length > 0 && (
         <>
-          <Summary score= {userScore} noq= {answers.length} />
+          <Summary score={userScore} noq={answers.length} />
           <Analysis answers={answers} />
         </>
       )}
