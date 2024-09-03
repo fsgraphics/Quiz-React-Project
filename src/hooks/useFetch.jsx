@@ -4,9 +4,9 @@ const useFetch = (url, method, headers) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [result, setResult] = useState(null);
-
+// console.log(result);
   useEffect(() => {
-    async function requstFetch() {
+    async function requestFetch() {
       try {
         setLoading(true);
         setError(false);
@@ -19,14 +19,18 @@ const useFetch = (url, method, headers) => {
         const data = await response.json();
         setLoading(false);
         setResult(data);
+        // console.log(data);
       } catch (err) {
         console.log(err);
         setLoading(false);
         setError(true);
       }
+      
     }
-    requstFetch();
-  }, [url, method, headers]);
+     requestFetch();
+   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     loading,
