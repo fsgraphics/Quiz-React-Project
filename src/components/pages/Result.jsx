@@ -1,4 +1,3 @@
-import React from "react";
 import Summary from "../Summary";
 import Analysis from "../Analysis";
 import { useLocation, useParams } from "react-router-dom";
@@ -9,7 +8,7 @@ const Result = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const { qna } = state;
-  console.log(state);
+  // console.log(state);
   const { loading, error, answers } = useAnswers(id);
 
   function calculate() {
