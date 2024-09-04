@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useApiCurated = (url) => {
-  const api = "Oq35bjwHJJWsD3oVLXKDMfzHO8hyxfVoLBEoe8VfR6UwO2yXrJnSR21D";
+const useApiCurated = (url, apiKey) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [currentPhotos, setCurrentphotos] = useState(null);
@@ -17,7 +16,7 @@ const useApiCurated = (url) => {
           method: "GET",
           headers: {
             Accept: "application/json",
-            Authorization: api,
+            Authorization: apiKey,
           },
         });
         setApiUrl(response);
@@ -34,8 +33,7 @@ const useApiCurated = (url) => {
     }
 
     curatedPhotos();
-  }, [url]);
-
+  }, [apiKey, url]);
   return {
     loading,
     error,

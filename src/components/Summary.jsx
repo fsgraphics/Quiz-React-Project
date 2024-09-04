@@ -24,9 +24,10 @@ const Summary = ({ score, noq }) => {
     }
   }, [noq, score]);
 
+  const apiKey = "Oq35bjwHJJWsD3oVLXKDMfzHO8hyxfVoLBEoe8VfR6UwO2yXrJnSR21D";
   const url = `https://api.pexels.com/v1/search?query=${getKeyword}&per_page`;
 
-  const { loading, error, currentPhotos } = useApiCurated(url);
+  const { loading, error, currentPhotos } = useApiCurated(url, apiKey);
 
   const image = currentPhotos
     ? currentPhotos?.photos[random].src.medium
